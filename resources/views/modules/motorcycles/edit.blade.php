@@ -1,0 +1,201 @@
+@extends('layouts.dashboard')
+
+@section('title', 'Editar Motocicleta - MotoRentPro')
+@section('page-title', 'Editar Motocicleta')
+
+@section('content')
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div class="px-6 py-4 border-b border-gray-200">
+            <h2 class="text-lg font-semibold text-gray-900">Editar Motocicleta</h2>
+        </div>
+        
+        <form method="POST" action="{{ route('motorcycles.update', $motorcycle) }}" enctype="multipart/form-data" class="p-6">
+            @csrf
+            @method('PUT')
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Informações Básicas -->
+                <div class="space-y-4">
+                    <h3 class="text-md font-medium text-gray-900 border-b border-gray-200 pb-2">Informações Básicas</h3>
+                    
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome/Modelo *</label>
+                        <input type="text" id="name" name="name" value="{{ old('name', $motorcycle->name) }}" required
+                               class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+                               placeholder="Ex: Honda CG 160">
+                        @error('name')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="license_plate" class="block text-sm font-medium text-gray-700 mb-1">Placa *</label>
+                        <input type="text" id="license_plate" name="license_plate" value="{{ old('license_plate', $motorcycle->license_plate) }}" required
+                               class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+                               placeholder="Ex: ABC-1234">
+                        @error('license_plate')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Ano *</label>
+                        <input type="number" id="year" name="year" value="{{ old('year', $motorcycle->year) }}" min="1900" max="{{ date('Y') + 1 }}" required
+                               class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+                               placeholder="Ex: 2023">
+                        @error('year')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status *</label>
+                        <select id="status" name="status" required
+                                class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+                            <option value="">Selecione...</option>
+                            @foreach($statuses as $status)
+                                <option value="{{ $status }}" {{ old('status', $motorcycle->status) == $status ? 'selected' : '' }}>{{ $status }}</option>
+                            @endforeach
+                        </select>
+                        @error('status')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+                
+                <!-- Especificações -->
+                <div class="space-y-4">
+                    <h3 class="text-md font-medium text-gray-900 border-b border-gray-200 pb-2">Especificações</h3>
+                    
+                    <div>
+                        <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Categoria *</label>
+                        <select id="category" name="category" required
+                                class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+                            <option value="">Selecione...</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category }}" {{ old('category', $motorcycle->category) == $category ? 'selected' : '' }}>{{ $category }}</option>
+                            @endforeach
+                        </select>
+                        @error('category')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="fuel" class="block text-sm font-medium text-gray-700 mb-1">Combustível *</label>
+                        <select id="fuel" name="fuel" required
+                                class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+                            <option value="">Selecione...</option>
+                            @foreach($fuels as $fuel)
+                                <option value="{{ $fuel }}" {{ old('fuel', $motorcycle->fuel) == $fuel ? 'selected' : '' }}>{{ $fuel }}</option>
+                            @endforeach
+                        </select>
+                        @error('fuel')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="mileage" class="block text-sm font-medium text-gray-700 mb-1">Quilometragem (km) *</label>
+                        <input type="number" id="mileage" name="mileage" value="{{ old('mileage', $motorcycle->mileage) }}" min="0" required
+                               class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+                               placeholder="Ex: 15000">
+                        @error('mileage')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="daily_rate" class="block text-sm font-medium text-gray-700 mb-1">Diária (R$) *</label>
+                        <input type="number" id="daily_rate" name="daily_rate" value="{{ old('daily_rate', $motorcycle->daily_rate) }}" min="0" step="0.01" required
+                               class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+                               placeholder="Ex: 80.00">
+                        @error('daily_rate')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Informações Adicionais -->
+            <div class="mt-6 space-y-4">
+                <h3 class="text-md font-medium text-gray-900 border-b border-gray-200 pb-2">Informações Adicionais</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="rating" class="block text-sm font-medium text-gray-700 mb-1">Avaliação</label>
+                        <input type="number" id="rating" name="rating" value="{{ old('rating', $motorcycle->rating) }}" min="0" max="5" step="0.1"
+                               class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+                               placeholder="Ex: 4.5">
+                        @error('rating')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="total_rentals" class="block text-sm font-medium text-gray-700 mb-1">Total de Aluguéis</label>
+                        <input type="number" id="total_rentals" name="total_rentals" value="{{ old('total_rentals', $motorcycle->total_rentals) }}" min="0"
+                               class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+                               placeholder="Ex: 25">
+                        @error('total_rentals')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="tags" class="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        @foreach($tags as $tag)
+                            <label class="flex items-center">
+                                <input type="checkbox" name="tags[]" value="{{ $tag }}" 
+                                       {{ in_array($tag, old('tags', $motorcycle->tags ?? [])) ? 'checked' : '' }}
+                                       class="rounded border-gray-300 text-gray-600 focus:ring-gray-500">
+                                <span class="ml-2 text-sm text-gray-700">{{ ucfirst($tag) }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                    @error('tags')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+                    <textarea id="description" name="description" rows="3"
+                              class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+                              placeholder="Descreva as características da motocicleta...">{{ old('description', $motorcycle->description) }}</textarea>
+                    @error('description')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                
+                <div>
+                    <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Imagem</label>
+                    @if($motorcycle->image)
+                        <div class="mb-2">
+                            <img src="{{ Storage::url($motorcycle->image) }}" alt="{{ $motorcycle->name }}" class="w-32 h-32 object-cover rounded-lg border">
+                        </div>
+                    @endif
+                    <input type="file" id="image" name="image" accept="image/*"
+                           class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+                    @error('image')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="flex justify-end gap-2 mt-8 pt-6 border-t border-gray-200">
+                <a href="{{ route('motorcycles.index') }}" class="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
+                    Cancelar
+                </a>
+                <button type="submit" class="px-3 py-1.5 text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 rounded-md">
+                    Atualizar Motocicleta
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection 
