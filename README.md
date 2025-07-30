@@ -113,4 +113,5 @@ cp .env.example .env
 php artisan key:generate
 # Configure o banco de dados no .env
 php artisan migrate
+php artisan db:seed
 php artisan serve

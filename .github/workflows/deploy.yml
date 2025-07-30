@@ -1,0 +1,33 @@
+name: Deploy Laravel via FTP
+
+on:
+  push:
+    branches:
+      - main  # Altere se você usar outra branch
+
+jobs:
+  deploy:
+    name: Enviar aplicação Laravel para Hostinger
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar o repositório
+      uses: actions/checkout@v3
+
+    - name: Instalar dependências do Composer
+      run: |
+        composer install --no-dev --optimize-autoloader
+
+    - name: Copiar arquivos para a pasta de build
+      run: |
+        mkdir deploy
+        rsync -av --exclude=".git*" --exclude="node_modules" --exclude="tests" --exclude=".github" --exclude="*.log" ./ ./deploy/
+
+    - name: Deploy via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ${{ secrets.FTP_REMOTE_DIR }}/
+        local-dir: deploy/

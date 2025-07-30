@@ -10,14 +10,14 @@
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold text-gray-900">{{ $motorcycle->name }}</h2>
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('motorcycles.edit', $motorcycle) }}" class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
-                        <i class="fas fa-edit mr-1.5 text-xs"></i>
-                        Editar
-                    </a>
-                    <a href="{{ route('motorcycles.index') }}" class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
-                        <i class="fas fa-arrow-left mr-1.5 text-xs"></i>
-                        Voltar
-                    </a>
+                                    <a href="/frota/{{ $motorcycle->id }}/edit" class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
+                    <i class="fas fa-edit mr-1.5 text-xs"></i>
+                    Editar
+                </a>
+                <a href="/frota" class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
+                    <i class="fas fa-arrow-left mr-1.5 text-xs"></i>
+                    Voltar
+                </a>
                 </div>
             </div>
         </div>
@@ -27,7 +27,10 @@
                 <!-- Imagem -->
                 <div>
                     @if($motorcycle->image)
-                        <img src="{{ Storage::url($motorcycle->image) }}" alt="{{ $motorcycle->name }}" class="w-full h-80 object-cover rounded-lg border">
+                        @php
+                            $imageName = basename($motorcycle->image);
+                        @endphp
+                        <img src="/motorcycles/{{ $imageName }}" alt="{{ $motorcycle->name }}" class="w-full h-80 object-cover rounded-lg border">
                     @else
                         <div class="w-full h-80 bg-gray-100 rounded-lg border flex items-center justify-center">
                             <i class="fas fa-camera text-4xl text-gray-400"></i>

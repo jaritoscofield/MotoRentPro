@@ -104,7 +104,7 @@ class MotorcycleController extends Controller
             'daily_rate' => 'required|numeric|min:0',
             'total_rentals' => 'nullable|integer|min:0',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120'
         ]);
 
         $data = $request->all();
@@ -113,11 +113,30 @@ class MotorcycleController extends Controller
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('motorcycles', 'public');
             $data['image'] = $imagePath;
+            
+            // Copiar para pasta public
+            $imageName = basename($imagePath);
+            $sourcePath = storage_path('app/public/' . $imagePath);
+            $destPath = public_path('motorcycles/' . $imageName);
+            
+            if (!is_dir(public_path('motorcycles'))) {
+                mkdir(public_path('motorcycles'), 0755, true);
+            }
+            
+            copy($sourcePath, $destPath);
+            
+            // Log para debug
+            \Log::info('Imagem salva:', [
+                'path' => $imagePath,
+                'full_path' => storage_path('app/public/' . $imagePath),
+                'public_path' => $destPath,
+                'exists' => file_exists(storage_path('app/public/' . $imagePath))
+            ]);
         }
 
         Motorcycle::create($data);
 
-        return redirect()->route('motorcycles.index')->with('success', 'Motocicleta cadastrada com sucesso!');
+        return redirect('/frota')->with('success', 'Motocicleta cadastrada com sucesso!');
     }
 
     public function show(Motorcycle $motorcycle)
@@ -150,7 +169,7 @@ class MotorcycleController extends Controller
             'daily_rate' => 'required|numeric|min:0',
             'total_rentals' => 'nullable|integer|min:0',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120'
         ]);
 
         $data = $request->all();
@@ -160,15 +179,39 @@ class MotorcycleController extends Controller
             // Remove imagem antiga
             if ($motorcycle->image) {
                 Storage::disk('public')->delete($motorcycle->image);
+                $oldImageName = basename($motorcycle->image);
+                $oldPublicPath = public_path('motorcycles/' . $oldImageName);
+                if (file_exists($oldPublicPath)) {
+                    unlink($oldPublicPath);
+                }
             }
             
             $imagePath = $request->file('image')->store('motorcycles', 'public');
             $data['image'] = $imagePath;
+            
+            // Copiar para pasta public
+            $imageName = basename($imagePath);
+            $sourcePath = storage_path('app/public/' . $imagePath);
+            $destPath = public_path('motorcycles/' . $imageName);
+            
+            if (!is_dir(public_path('motorcycles'))) {
+                mkdir(public_path('motorcycles'), 0755, true);
+            }
+            
+            copy($sourcePath, $destPath);
+            
+            // Log para debug
+            \Log::info('Imagem atualizada:', [
+                'path' => $imagePath,
+                'full_path' => storage_path('app/public/' . $imagePath),
+                'public_path' => $destPath,
+                'exists' => file_exists(storage_path('app/public/' . $imagePath))
+            ]);
         }
 
         $motorcycle->update($data);
 
-        return redirect()->route('motorcycles.index')->with('success', 'Motocicleta atualizada com sucesso!');
+        return redirect('/frota')->with('success', 'Motocicleta atualizada com sucesso!');
     }
 
     public function destroy(Motorcycle $motorcycle)
@@ -180,7 +223,7 @@ class MotorcycleController extends Controller
 
         $motorcycle->delete();
 
-        return redirect()->route('motorcycles.index')->with('success', 'Motocicleta removida com sucesso!');
+        return redirect('/frota')->with('success', 'Motocicleta removida com sucesso!');
     }
 
     public function bulkDelete(Request $request)
@@ -188,7 +231,7 @@ class MotorcycleController extends Controller
         $ids = $request->input('selected_motorcycles', []);
         
         if (empty($ids)) {
-            return redirect()->route('motorcycles.index')->with('error', 'Nenhuma motocicleta selecionada.');
+            return redirect('/frota')->with('error', 'Nenhuma motocicleta selecionada.');
         }
 
         $motorcycles = Motorcycle::whereIn('id', $ids)->get();
@@ -200,7 +243,7 @@ class MotorcycleController extends Controller
             $motorcycle->delete();
         }
 
-        return redirect()->route('motorcycles.index')->with('success', count($ids) . ' motocicleta(s) removida(s) com sucesso!');
+        return redirect('/frota')->with('success', count($ids) . ' motocicleta(s) removida(s) com sucesso!');
     }
 
     public function export()

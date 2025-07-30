@@ -39,19 +39,24 @@
                     <span>Dashboard</span>
                 </a>
                 
-                <a href="{{ route('motorcycles.index') }}" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg transition-colors duration-200 text-sm {{ request()->routeIs('motorcycles.*') ? 'bg-gray-100 text-gray-900' : '' }}">
+                <a href="/frota" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg transition-colors duration-200 text-sm {{ request()->routeIs('motorcycles.*') ? 'bg-gray-100 text-gray-900' : '' }}">
                     <i class="fas fa-motorcycle mr-2 text-xs"></i>
-                    <span>Motocicletas</span>
+                    <span>Gestão de Frota</span>
                 </a>
                 
-                <a href="#" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg transition-colors duration-200 text-sm">
+                <a href="/reservas" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg transition-colors duration-200 text-sm">
                     <i class="fas fa-calendar-alt mr-2 text-xs"></i>
-                    <span>Aluguéis</span>
+                    <span>Reservas</span>
                 </a>
                 
-                <a href="#" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg transition-colors duration-200 text-sm">
+                <a href="/clientes" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg transition-colors duration-200 text-sm">
                     <i class="fas fa-users mr-2 text-xs"></i>
                     <span>Clientes</span>
+                </a>
+                
+                <a href="/manutencao" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg transition-colors duration-200 text-sm">
+                    <i class="fas fa-tools mr-2 text-xs"></i>
+                    <span>Manutenção</span>
                 </a>
                 
                 <a href="#" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg transition-colors duration-200 text-sm">

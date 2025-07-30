@@ -10,7 +10,7 @@
             <h2 class="text-lg font-semibold text-gray-900">Editar Motocicleta</h2>
         </div>
         
-        <form method="POST" action="{{ route('motorcycles.update', $motorcycle) }}" enctype="multipart/form-data" class="p-6">
+        <form method="POST" action="/frota/{{ $motorcycle->id }}" enctype="multipart/form-data" class="p-6">
             @csrf
             @method('PUT')
             
@@ -172,14 +172,23 @@
                 </div>
                 
                 <div>
-                    <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Imagem</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload de Imagens</label>
                     @if($motorcycle->image)
-                        <div class="mb-2">
-                            <img src="{{ Storage::url($motorcycle->image) }}" alt="{{ $motorcycle->name }}" class="w-32 h-32 object-cover rounded-lg border">
+                        <div class="mb-3">
+                            @php
+                                $imageName = basename($motorcycle->image);
+                            @endphp
+                            <img src="/motorcycles/{{ $imageName }}" alt="{{ $motorcycle->name }}" class="w-32 h-32 object-cover rounded-lg border">
                         </div>
                     @endif
-                    <input type="file" id="image" name="image" accept="image/*"
-                           class="w-full px-3 py-1.5 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors cursor-pointer" onclick="document.getElementById('image').click()">
+                        <i class="fas fa-camera text-4xl text-gray-400 mb-3"></i>
+                        <p class="text-sm text-gray-700 mb-1">Clique para adicionar fotos da moto</p>
+                        <p class="text-xs text-gray-500">Máximo 10 imagens, até 5MB cada</p>
+                    </div>
+                    <input type="file" id="image" name="image" accept="image/*" multiple
+                           class="hidden"
+                           onchange="handleImageUpload(this)">
                     @error('image')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -188,9 +197,9 @@
             
             <!-- Actions -->
             <div class="flex justify-end gap-2 mt-8 pt-6 border-t border-gray-200">
-                <a href="{{ route('motorcycles.index') }}" class="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
-                    Cancelar
-                </a>
+                            <a href="/frota" class="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
+                Cancelar
+            </a>
                 <button type="submit" class="px-3 py-1.5 text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 rounded-md">
                     Atualizar Motocicleta
                 </button>
@@ -198,4 +207,38 @@
         </form>
     </div>
 </div>
+
+@push('scripts')
+<script>
+function handleImageUpload(input) {
+    const files = input.files;
+    const maxFiles = 10;
+    const maxSize = 5 * 1024 * 1024; // 5MB (5120 KB)
+    
+    if (files.length > maxFiles) {
+        alert(`Máximo de ${maxFiles} imagens permitidas.`);
+        input.value = '';
+        return;
+    }
+    
+    for (let i = 0; i < files.length; i++) {
+        if (files[i].size > maxSize) {
+            alert(`A imagem "${files[i].name}" excede o tamanho máximo de 5MB.`);
+            input.value = '';
+            return;
+        }
+    }
+    
+    // Opcional: Mostrar preview das imagens selecionadas
+    if (files.length > 0) {
+        const uploadArea = input.previousElementSibling;
+        uploadArea.innerHTML = `
+            <i class="fas fa-check-circle text-4xl text-green-500 mb-3"></i>
+            <p class="text-sm text-gray-700 mb-1">${files.length} imagem(ns) selecionada(s)</p>
+            <p class="text-xs text-gray-500">Clique para alterar</p>
+        `;
+    }
+}
+</script>
+@endpush
 @endsection 

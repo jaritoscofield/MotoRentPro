@@ -16,7 +16,7 @@
                     <i class="fas fa-download mr-1.5 text-xs"></i>
                     Exportar
                 </a>
-                <a href="{{ route('motorcycles.create') }}" class="inline-flex items-center px-3 py-1.5 border border-transparent rounded-md text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                <a href="/frota/create" class="inline-flex items-center px-3 py-1.5 border border-transparent rounded-md text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     <i class="fas fa-plus mr-1.5 text-xs"></i>
                     Nova Moto
                 </a>
@@ -26,7 +26,7 @@
 
     <!-- Search and Filter Bar -->
     <div class="bg-white rounded-lg border border-gray-200 p-4 mb-6">
-        <form method="GET" action="{{ route('motorcycles.index') }}" id="filterForm">
+        <form method="GET" action="/frota" id="filterForm">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <!-- Search Bar -->
                 <div class="flex-1">
@@ -81,9 +81,9 @@
 
             <!-- Advanced Filters (Hidden by default) -->
             <div id="advancedFilters" class="hidden mt-4 pt-4 border-t border-gray-200">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div class="flex flex-wrap items-end gap-4">
                     <!-- Status Filter -->
-                    <div>
+                    <div class="w-40">
                         <label class="block text-xs font-medium text-gray-700 mb-1">Status</label>
                         <select name="status" class="block w-full px-2 py-1 border border-gray-300 rounded text-xs bg-white focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                             <option value="">Todos</option>
@@ -94,7 +94,7 @@
                     </div>
 
                     <!-- Category Filter -->
-                    <div>
+                    <div class="w-40">
                         <label class="block text-xs font-medium text-gray-700 mb-1">Categoria</label>
                         <select name="category" class="block w-full px-2 py-1 border border-gray-300 rounded text-xs bg-white focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                             <option value="">Todas</option>
@@ -105,7 +105,7 @@
                     </div>
 
                     <!-- Fuel Filter -->
-                    <div>
+                    <div class="w-40">
                         <label class="block text-xs font-medium text-gray-700 mb-1">Combustível</label>
                         <select name="fuel" class="block w-full px-2 py-1 border border-gray-300 rounded text-xs bg-white focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                             <option value="">Todos</option>
@@ -116,11 +116,11 @@
                     </div>
 
                     <!-- Price Range -->
-                    <div>
+                    <div class="w-48">
                         <label class="block text-xs font-medium text-gray-700 mb-1">Faixa de Preço</label>
-                        <div class="flex gap-1">
-                            <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Min" class="flex-1 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
-                            <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max" class="flex-1 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                        <div class="flex gap-2">
+                            <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Min" class="w-20 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                            <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max" class="w-20 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                         </div>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
     </div>
 
     <!-- Motorcycle Cards Grid -->
-    <form id="bulkForm" method="POST" action="{{ route('motorcycles.bulk-delete') }}">
+    <form id="bulkForm" method="POST" action="/frota/bulk-delete">
         @csrf
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @forelse($motorcycles as $motorcycle)
@@ -166,7 +166,10 @@
                     <!-- Image -->
                     <div class="flex justify-center items-center h-32 bg-gray-100 rounded-lg mb-3">
                         @if($motorcycle->image)
-                            <img src="{{ Storage::url($motorcycle->image) }}" alt="{{ $motorcycle->name }}" class="h-full w-full object-cover rounded-lg">
+                            @php
+                                $imageName = basename($motorcycle->image);
+                            @endphp
+                            <img src="/motorcycles/{{ $imageName }}" alt="{{ $motorcycle->name }}" class="h-full w-full object-cover rounded-lg" onerror="console.log('Erro ao carregar imagem: ' + this.src)">
                         @else
                             <i class="fas fa-camera text-3xl text-gray-400"></i>
                         @endif
@@ -225,14 +228,14 @@
                 
                 <!-- Action Buttons -->
                 <div class="flex border-t border-gray-200">
-                    <a href="{{ route('motorcycles.edit', $motorcycle) }}" class="flex-1 flex items-center justify-center px-3 py-2 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                    <a href="/frota/{{ $motorcycle->id }}/edit" class="flex-1 flex items-center justify-center px-3 py-2 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900">
                         <i class="fas fa-edit mr-1"></i>
                         Editar
                     </a>
-                    <a href="{{ route('motorcycles.show', $motorcycle) }}" class="flex-1 flex items-center justify-center px-3 py-2 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l border-gray-200">
+                    <a href="/frota/{{ $motorcycle->id }}" class="flex-1 flex items-center justify-center px-3 py-2 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l border-gray-200">
                         <i class="fas fa-eye"></i>
                     </a>
-                    <form method="POST" action="{{ route('motorcycles.destroy', $motorcycle) }}" class="flex-1" onsubmit="return confirm('Tem certeza que deseja excluir esta motocicleta?')">
+                    <form method="POST" action="/frota/{{ $motorcycle->id }}" class="flex-1" onsubmit="return confirm('Tem certeza que deseja excluir esta motocicleta?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="w-full flex items-center justify-center px-3 py-2 text-xs text-red-600 hover:bg-red-50 hover:text-red-700 border-l border-gray-200">
@@ -245,7 +248,7 @@
             <div class="col-span-full text-center py-12">
                 <i class="fas fa-motorcycle text-4xl text-gray-400 mb-4"></i>
                 <p class="text-gray-500 text-lg">Nenhuma motocicleta encontrada</p>
-                <a href="{{ route('motorcycles.create') }}" class="inline-flex items-center px-3 py-1.5 mt-4 text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 rounded-md">
+                <a href="/frota/create" class="inline-flex items-center px-3 py-1.5 mt-4 text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 rounded-md">
                     <i class="fas fa-plus mr-1.5 text-xs"></i>
                     Adicionar Primeira Moto
                 </a>
@@ -270,7 +273,7 @@
     }
 
     function clearFilters() {
-        window.location.href = '{{ route('motorcycles.index') }}';
+        window.location.href = '/frota';
     }
 
     function bulkDelete() {
