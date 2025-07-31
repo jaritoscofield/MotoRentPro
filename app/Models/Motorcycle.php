@@ -76,4 +76,19 @@ class Motorcycle extends Model
     {
         return 'R$ ' . number_format($this->daily_rate, 2, ',', '.');
     }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function maintenances()
+    {
+        return $this->hasMany(Maintenance::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 } 

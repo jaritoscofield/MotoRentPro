@@ -54,4 +54,14 @@ class Client extends Model
     {
         return $this->birth_date ? $this->birth_date->format('d/m/Y') : 'N/A';
     }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 } 

@@ -1,9 +1,5 @@
-<div class="bg-white rounded-xl shadow-2xl border-2 border-gray-300 py-10 px-8 max-w-md w-full">
-    <!-- Título e Subtítulo -->
-    <div class="mb-8 text-center">
-        <h2 class="text-2xl font-bold text-gray-900 mb-2">MotoRentPro</h2>
-        <p class="text-gray-700 text-sm font-medium">Sistema de Gestão de Aluguel de Motos</p>
-    </div>
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl border-2 border-gray-300 dark:border-gray-600 py-10 px-8 max-w-md w-full">
+
 
     <form class="space-y-6" method="POST" action="{{ route('login') }}">
         @csrf
@@ -20,7 +16,7 @@
                     type="email" 
                     required 
                     value="{{ old('email') }}"
-                    class="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none bg-gray-50"
+                    class="w-full pl-10 pr-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                     placeholder="E-mail"
                     autocomplete="email"
                 >
@@ -44,7 +40,7 @@
                     name="password" 
                     type="password" 
                     required
-                    class="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none bg-gray-50"
+                    class="w-full pl-10 pr-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                     placeholder="Senha"
                     autocomplete="current-password"
                 >

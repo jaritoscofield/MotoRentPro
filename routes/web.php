@@ -9,105 +9,20 @@ use App\Http\Controllers\MotorcycleController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingsController;
 
+// Rota principal - redireciona para dashboard se logado, senão para login
 Route::get('/', function () {
-    return view('welcome');
-});
-
-// Rota para servir imagens do storage (pública)
-Route::get('/storage/{path}', function ($path) {
-    $fullPath = storage_path('app/public/' . $path);
-    
-    if (!file_exists($fullPath)) {
-        return response('Arquivo não encontrado: ' . $path, 404);
+    if (auth()->check()) {
+        return redirect('/dashboard');
     }
-    
-    try {
-        $file = file_get_contents($fullPath);
-        $type = mime_content_type($fullPath);
-        
-        return response($file, 200, [
-            'Content-Type' => $type,
-            'Cache-Control' => 'public, max-age=31536000',
-            'Content-Length' => strlen($file)
-        ]);
-    } catch (Exception $e) {
-        return response('Erro ao ler arquivo', 500);
-    }
-})->where('path', '.*');
-
-// Rota de teste para debug
-Route::get('/test-image/{filename}', function ($filename) {
-    $fullPath = storage_path('app/public/motorcycles/' . $filename);
-    
-    echo "<h1>Teste de Imagem</h1>";
-    echo "<p>Arquivo: {$filename}</p>";
-    echo "<p>Caminho completo: {$fullPath}</p>";
-    echo "<p>Existe: " . (file_exists($fullPath) ? 'SIM' : 'NÃO') . "</p>";
-    
-    if (file_exists($fullPath)) {
-        echo "<p>Tamanho: " . filesize($fullPath) . " bytes</p>";
-        echo "<p>Tipo: " . mime_content_type($fullPath) . "</p>";
-        echo "<img src='/storage/motorcycles/{$filename}' style='max-width: 300px;'>";
-    }
-    
-    echo "<hr>";
-    echo "<p><a href='/storage/motorcycles/{$filename}' target='_blank'>Abrir imagem diretamente</a></p>";
+    return redirect('/login');
 });
 
-// Rota para listar todas as motos e suas imagens
-Route::get('/debug-motos', function () {
-    $motorcycles = \App\Models\Motorcycle::all();
-    
-    echo "<h1>Debug - Todas as Motos</h1>";
-    echo "<p>Total de motos: " . $motorcycles->count() . "</p>";
-    
-    foreach ($motorcycles as $moto) {
-        echo "<hr>";
-        echo "<h3>Moto ID: {$moto->id}</h3>";
-        echo "<p>Nome: {$moto->name}</p>";
-        echo "<p>Imagem no banco: " . ($moto->image ?: 'N/A') . "</p>";
-        
-        if ($moto->image) {
-            $fullPath = storage_path('app/public/' . $moto->image);
-            echo "<p>Caminho completo: {$fullPath}</p>";
-            echo "<p>Arquivo existe: " . (file_exists($fullPath) ? 'SIM' : 'NÃO') . "</p>";
-            
-            if (file_exists($fullPath)) {
-                echo "<p>Tamanho: " . filesize($fullPath) . " bytes</p>";
-                echo "<p>Tipo: " . mime_content_type($fullPath) . "</p>";
-                echo "<img src='/storage/{$moto->image}' style='max-width: 200px; border: 1px solid #ccc;'>";
-                echo "<br><a href='/storage/{$moto->image}' target='_blank'>Abrir imagem</a>";
-            }
-        }
-    }
-    
-    echo "<hr>";
-    echo "<h2>Arquivos no diretório storage/app/public/motorcycles/</h2>";
-    $files = scandir(storage_path('app/public/motorcycles'));
-    foreach ($files as $file) {
-        if ($file !== '.' && $file !== '..') {
-            echo "<p>Arquivo: {$file}</p>";
-        }
-    }
-});
 
-// Rota temporária para testar motos sem autenticação
-Route::get('/test-motos', function () {
-    $motorcycles = \App\Models\Motorcycle::all();
-    return view('modules.motorcycles.index', compact('motorcycles'));
-});
-
-// Rota de teste simples
-Route::get('/teste', function () {
-    return 'Servidor funcionando!';
-});
-
-// Rota de teste do controller
-Route::get('/teste-controller', function () {
-    $controller = new \App\Http\Controllers\MotorcycleController();
-    return $controller->index(request());
-});
 
 // Rotas de Login Web
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -162,6 +77,39 @@ Route::middleware('auth')->group(function () {
     Route::delete('/manutencao/{maintenance}', [MaintenanceController::class, 'destroy'])->name('maintenances.destroy');
     Route::post('/manutencao/bulk-delete', [MaintenanceController::class, 'bulkDelete'])->name('maintenances.bulk-delete');
     Route::get('/manutencao/export', [MaintenanceController::class, 'export'])->name('maintenances.export');
+    
+    // Rotas de pagamentos
+    Route::get('/pagamentos', [PaymentController::class, 'index'])->name('payments.index');
+    Route::get('/pagamentos/create', [PaymentController::class, 'create'])->name('payments.create');
+    Route::post('/pagamentos', [PaymentController::class, 'store'])->name('payments.store');
+    Route::get('/pagamentos/export', [PaymentController::class, 'export'])->name('payments.export');
+    Route::get('/pagamentos/dashboard', [PaymentController::class, 'dashboard'])->name('payments.dashboard');
+    Route::get('/pagamentos/reports', [PaymentController::class, 'reports'])->name('payments.reports');
+    Route::get('/pagamentos/{payment}', [PaymentController::class, 'show'])->name('payments.show');
+    Route::get('/pagamentos/{payment}/edit', [PaymentController::class, 'edit'])->name('payments.edit');
+    Route::put('/pagamentos/{payment}', [PaymentController::class, 'update'])->name('payments.update');
+    Route::delete('/pagamentos/{payment}', [PaymentController::class, 'destroy'])->name('payments.destroy');
+    
+    // Rotas para registro de pagamentos de parcelas
+    Route::get('/pagamentos/installment/register', [PaymentController::class, 'showRegisterPaymentForm'])->name('payments.installment.register');
+    Route::post('/pagamentos/installment/register', [PaymentController::class, 'registerPayment'])->name('payments.installment.store');
+    Route::get('/pagamentos/installment/pending', [PaymentController::class, 'getPendingInstallments'])->name('payments.installment.pending');
+    
+    // Rotas de relatórios gerais
+    Route::get('/relatorios', [ReportController::class, 'index'])->name('reports.index');
+    
+    // Rotas de perfil
+    Route::get('/perfil', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/perfil/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/perfil/password', [ProfileController::class, 'changePassword'])->name('profile.password');
+    Route::post('/perfil/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+    
+    // Rotas de configurações
+    Route::get('/configuracoes', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/configuracoes/update', [SettingsController::class, 'update'])->name('settings.update');
+    Route::get('/configuracoes/backup', [SettingsController::class, 'backup'])->name('settings.backup');
+    Route::get('/configuracoes/clear-cache', [SettingsController::class, 'clearCache'])->name('settings.clear-cache');
+    Route::get('/configuracoes/system-info', [SettingsController::class, 'systemInfo'])->name('settings.system-info');
 });
 
 // Rotas de autenticação API

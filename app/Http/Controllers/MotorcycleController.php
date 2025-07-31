@@ -91,7 +91,7 @@ class MotorcycleController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'license_plate' => 'required|string|max:20|unique:motorcycles',
             'year' => 'required|integer|min:1900|max:' . (date('Y') + 1),
@@ -104,34 +104,58 @@ class MotorcycleController extends Controller
             'daily_rate' => 'required|numeric|min:0',
             'total_rentals' => 'nullable|integer|min:0',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120'
-        ]);
+        ];
+
+        // Adiciona validação de imagem apenas se houver upload
+        if ($request->hasFile('image')) {
+            $rules['image'] = 'array';
+            $rules['image.*'] = 'image|mimes:jpeg,png,jpg,gif|max:5120';
+        }
+
+        $request->validate($rules);
 
         $data = $request->all();
         
         // Upload da imagem
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('motorcycles', 'public');
-            $data['image'] = $imagePath;
+            $images = $request->file('image');
             
-            // Copiar para pasta public
-            $imageName = basename($imagePath);
-            $sourcePath = storage_path('app/public/' . $imagePath);
-            $destPath = public_path('motorcycles/' . $imageName);
-            
-            if (!is_dir(public_path('motorcycles'))) {
-                mkdir(public_path('motorcycles'), 0755, true);
+            // Se for apenas uma imagem, converte para array
+            if (!is_array($images)) {
+                $images = [$images];
             }
             
-            copy($sourcePath, $destPath);
+            $imagePaths = [];
+            foreach ($images as $image) {
+                if ($image && $image->isValid() && $image->getError() === UPLOAD_ERR_OK) {
+                    $imagePath = $image->store('motorcycles', 'public');
+                    $imagePaths[] = $imagePath;
+                    
+                    // Copiar para pasta public
+                    $imageName = basename($imagePath);
+                    $sourcePath = storage_path('app/public/' . $imagePath);
+                    $destPath = public_path('motorcycles/' . $imageName);
+                    
+                    if (!is_dir(public_path('motorcycles'))) {
+                        mkdir(public_path('motorcycles'), 0755, true);
+                    }
+                    
+                    copy($sourcePath, $destPath);
+                    
+                    // Log para debug
+                    \Log::info('Imagem salva:', [
+                        'path' => $imagePath,
+                        'full_path' => storage_path('app/public/' . $imagePath),
+                        'public_path' => $destPath,
+                        'exists' => file_exists(storage_path('app/public/' . $imagePath))
+                    ]);
+                }
+            }
             
-            // Log para debug
-            \Log::info('Imagem salva:', [
-                'path' => $imagePath,
-                'full_path' => storage_path('app/public/' . $imagePath),
-                'public_path' => $destPath,
-                'exists' => file_exists(storage_path('app/public/' . $imagePath))
-            ]);
+            // Salva apenas a primeira imagem no campo image (para compatibilidade)
+            if (!empty($imagePaths)) {
+                $data['image'] = $imagePaths[0];
+            }
         }
 
         Motorcycle::create($data);
@@ -156,7 +180,7 @@ class MotorcycleController extends Controller
 
     public function update(Request $request, Motorcycle $motorcycle)
     {
-        $request->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'license_plate' => 'required|string|max:20|unique:motorcycles,license_plate,' . $motorcycle->id,
             'year' => 'required|integer|min:1900|max:' . (date('Y') + 1),
@@ -169,8 +193,15 @@ class MotorcycleController extends Controller
             'daily_rate' => 'required|numeric|min:0',
             'total_rentals' => 'nullable|integer|min:0',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120'
-        ]);
+        ];
+
+        // Adiciona validação de imagem apenas se houver upload
+        if ($request->hasFile('image')) {
+            $rules['image'] = 'array';
+            $rules['image.*'] = 'image|mimes:jpeg,png,jpg,gif|max:5120';
+        }
+
+        $request->validate($rules);
 
         $data = $request->all();
         
@@ -186,27 +217,44 @@ class MotorcycleController extends Controller
                 }
             }
             
-            $imagePath = $request->file('image')->store('motorcycles', 'public');
-            $data['image'] = $imagePath;
+            $images = $request->file('image');
             
-            // Copiar para pasta public
-            $imageName = basename($imagePath);
-            $sourcePath = storage_path('app/public/' . $imagePath);
-            $destPath = public_path('motorcycles/' . $imageName);
-            
-            if (!is_dir(public_path('motorcycles'))) {
-                mkdir(public_path('motorcycles'), 0755, true);
+            // Se for apenas uma imagem, converte para array
+            if (!is_array($images)) {
+                $images = [$images];
             }
             
-            copy($sourcePath, $destPath);
+            $imagePaths = [];
+            foreach ($images as $image) {
+                if ($image && $image->isValid() && $image->getError() === UPLOAD_ERR_OK) {
+                    $imagePath = $image->store('motorcycles', 'public');
+                    $imagePaths[] = $imagePath;
+                    
+                    // Copiar para pasta public
+                    $imageName = basename($imagePath);
+                    $sourcePath = storage_path('app/public/' . $imagePath);
+                    $destPath = public_path('motorcycles/' . $imageName);
+                    
+                    if (!is_dir(public_path('motorcycles'))) {
+                        mkdir(public_path('motorcycles'), 0755, true);
+                    }
+                    
+                    copy($sourcePath, $destPath);
+                    
+                    // Log para debug
+                    \Log::info('Imagem atualizada:', [
+                        'path' => $imagePath,
+                        'full_path' => storage_path('app/public/' . $imagePath),
+                        'public_path' => $destPath,
+                        'exists' => file_exists(storage_path('app/public/' . $imagePath))
+                    ]);
+                }
+            }
             
-            // Log para debug
-            \Log::info('Imagem atualizada:', [
-                'path' => $imagePath,
-                'full_path' => storage_path('app/public/' . $imagePath),
-                'public_path' => $destPath,
-                'exists' => file_exists(storage_path('app/public/' . $imagePath))
-            ]);
+            // Salva apenas a primeira imagem no campo image (para compatibilidade)
+            if (!empty($imagePaths)) {
+                $data['image'] = $imagePaths[0];
+            }
         }
 
         $motorcycle->update($data);

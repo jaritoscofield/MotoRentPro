@@ -8,11 +8,11 @@
     <div class="mb-6">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Gestão de Frota</h1>
-                <p class="text-gray-600 mt-1">Controle completo da sua frota de motos</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Gestão de Frota</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-1">Controle completo da sua frota de motos</p>
             </div>
             <div class="flex flex-wrap gap-2 mt-4 lg:mt-0">
-                <a href="{{ route('motorcycles.export') }}" class="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-md text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                <a href="{{ route('motorcycles.export') }}" class="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-xs font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     <i class="fas fa-download mr-1.5 text-xs"></i>
                     Exportar
                 </a>
@@ -25,19 +25,19 @@
     </div>
 
     <!-- Search and Filter Bar -->
-    <div class="bg-white rounded-lg border border-gray-200 p-4 mb-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 mb-6">
         <form method="GET" action="/frota" id="filterForm">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <!-- Search Bar -->
                 <div class="flex-1">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-search text-gray-400"></i>
+                            <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
                         </div>
                         <input type="text" 
                                name="search"
                                value="{{ request('search') }}"
-                               class="block w-full pl-10 pr-3 py-1.5 border border-gray-300 rounded-md text-xs placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500" 
+                               class="block w-full pl-10 pr-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-xs placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" 
                                placeholder="Buscar por modelo, marca, placa ou tags...">
                     </div>
                 </div>
@@ -45,20 +45,20 @@
                 <!-- Filters and Controls -->
                 <div class="flex items-center gap-3">
                                     <!-- Filter Button -->
-                <button type="button" onclick="toggleFilters()" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 rounded-md text-xs font-medium text-gray-700 bg-white hover:bg-gray-50">
+                <button type="button" onclick="toggleFilters()" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-xs font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
                     <i class="fas fa-filter mr-1.5 text-xs"></i>
                     Filtros
                 </button>
                     
                     <!-- View Options -->
-                    <div class="flex items-center bg-gray-100 rounded-md p-0.5">
-                        <button type="button" class="p-1.5 text-gray-500 hover:text-gray-700 rounded">
+                    <div class="flex items-center bg-gray-100 dark:bg-gray-700 rounded-md p-0.5">
+                        <button type="button" class="p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 rounded">
                             <i class="fas fa-cog text-xs"></i>
                         </button>
-                        <button type="button" class="p-1.5 text-gray-900 bg-white rounded shadow-sm">
+                        <button type="button" class="p-1.5 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-600 rounded shadow-sm">
                             <i class="fas fa-th text-xs"></i>
                         </button>
-                        <button type="button" class="p-1.5 text-gray-500 hover:text-gray-700 rounded">
+                        <button type="button" class="p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 rounded">
                             <i class="fas fa-list text-xs"></i>
                         </button>
                         <button type="button" onclick="bulkDelete()" class="p-1.5 text-red-500 hover:text-red-700 rounded">
@@ -67,7 +67,7 @@
                     </div>
                     
                     <!-- Sort Dropdown -->
-                    <select name="sort" onchange="this.form.submit()" class="block px-3 py-1.5 border border-gray-300 rounded-md text-xs bg-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+                    <select name="sort" onchange="this.form.submit()" class="block px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                         <option value="name" {{ request('sort') == 'name' ? 'selected' : '' }}>Modelo A-Z</option>
                         <option value="name" {{ request('sort') == 'name' && request('direction') == 'desc' ? 'selected' : '' }}>Modelo Z-A</option>
                         <option value="daily_rate" {{ request('sort') == 'daily_rate' ? 'selected' : '' }}>Preço Menor</option>
@@ -80,12 +80,12 @@
             </div>
 
             <!-- Advanced Filters (Hidden by default) -->
-            <div id="advancedFilters" class="hidden mt-4 pt-4 border-t border-gray-200">
+            <div id="advancedFilters" class="hidden mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <div class="flex flex-wrap items-end gap-4">
                     <!-- Status Filter -->
                     <div class="w-40">
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Status</label>
-                        <select name="status" class="block w-full px-2 py-1 border border-gray-300 rounded text-xs bg-white focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
+                        <select name="status" class="block w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded text-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                             <option value="">Todos</option>
                             @foreach($statuses as $status)
                                 <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>{{ $status }}</option>
@@ -95,8 +95,8 @@
 
                     <!-- Category Filter -->
                     <div class="w-40">
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Categoria</label>
-                        <select name="category" class="block w-full px-2 py-1 border border-gray-300 rounded text-xs bg-white focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Categoria</label>
+                        <select name="category" class="block w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded text-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                             <option value="">Todas</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>{{ $category }}</option>
@@ -117,17 +117,17 @@
 
                     <!-- Price Range -->
                     <div class="w-48">
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Faixa de Preço</label>
+                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Faixa de Preço</label>
                         <div class="flex gap-2">
-                            <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Min" class="w-20 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
-                            <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max" class="w-20 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                            <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Min" class="w-20 px-2 py-1 border border-gray-300 dark:border-gray-600 rounded text-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                            <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max" class="w-20 px-2 py-1 border border-gray-300 dark:border-gray-600 rounded text-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                         </div>
                     </div>
                 </div>
 
                 <!-- Filter Actions -->
                 <div class="flex justify-end gap-2 mt-4">
-                    <button type="button" onclick="clearFilters()" class="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
+                    <button type="button" onclick="clearFilters()" class="px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md">
                         Limpar Filtros
                     </button>
                     <button type="submit" class="px-3 py-1.5 text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 rounded-md">
@@ -143,12 +143,12 @@
         @csrf
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @forelse($motorcycles as $motorcycle)
-            <div class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+            <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
                 <!-- Card Header -->
                 <div class="relative p-4">
                     <!-- Checkbox -->
                     <div class="absolute top-4 right-4">
-                        <input type="checkbox" name="selected_motorcycles[]" value="{{ $motorcycle->id }}" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500">
+                        <input type="checkbox" name="selected_motorcycles[]" value="{{ $motorcycle->id }}" class="rounded border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 focus:ring-gray-500">
                     </div>
                     
                     <!-- Status Tag -->
@@ -164,14 +164,14 @@
                     </div>
                     
                     <!-- Image -->
-                    <div class="flex justify-center items-center h-32 bg-gray-100 rounded-lg mb-3">
+                    <div class="flex justify-center items-center h-32 bg-gray-100 dark:bg-gray-700 rounded-lg mb-3">
                         @if($motorcycle->image)
                             @php
                                 $imageName = basename($motorcycle->image);
                             @endphp
                             <img src="/motorcycles/{{ $imageName }}" alt="{{ $motorcycle->name }}" class="h-full w-full object-cover rounded-lg" onerror="console.log('Erro ao carregar imagem: ' + this.src)">
                         @else
-                            <i class="fas fa-camera text-3xl text-gray-400"></i>
+                            <i class="fas fa-camera text-3xl text-gray-400 dark:text-gray-500"></i>
                         @endif
                     </div>
                     
@@ -179,22 +179,22 @@
                     <div class="flex justify-between items-center mb-3">
                         <div class="flex items-center">
                             <i class="fas fa-star text-yellow-400 text-sm mr-1"></i>
-                            <span class="text-sm font-medium text-gray-900">{{ $motorcycle->rating }}</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $motorcycle->rating }}</span>
                         </div>
-                        <i class="fas fa-qrcode text-gray-400 text-sm"></i>
+                        <i class="fas fa-qrcode text-gray-400 dark:text-gray-500 text-sm"></i>
                     </div>
                     
                     <!-- Motorcycle Info -->
                     <div class="mb-3">
-                        <h3 class="text-sm font-semibold text-gray-900 mb-1">{{ $motorcycle->name }}</h3>
-                        <p class="text-xs text-gray-500">{{ $motorcycle->license_plate }} • {{ $motorcycle->year }}</p>
+                        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-1">{{ $motorcycle->name }}</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ $motorcycle->license_plate }} • {{ $motorcycle->year }}</p>
                     </div>
                     
                     <!-- Tags -->
                     <div class="flex flex-wrap gap-1 mb-3">
                         @if($motorcycle->tags)
                             @foreach($motorcycle->tags as $tag)
-                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-700">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                                 {{ $tag }}
                             </span>
                             @endforeach
@@ -202,7 +202,7 @@
                     </div>
                     
                     <!-- Specifications -->
-                    <div class="space-y-2 text-xs text-gray-600">
+                    <div class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
                         <div class="flex items-center">
                             <i class="{{ $motorcycle->category_icon }} mr-2 w-4"></i>
                             <span><strong>Categoria:</strong> {{ $motorcycle->category }}</span>
@@ -227,27 +227,23 @@
                 </div>
                 
                 <!-- Action Buttons -->
-                <div class="flex border-t border-gray-200">
-                    <a href="/frota/{{ $motorcycle->id }}/edit" class="flex-1 flex items-center justify-center px-3 py-2 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                <div class="flex border-t border-gray-200 dark:border-gray-700">
+                    <a href="/frota/{{ $motorcycle->id }}/edit" class="flex-1 flex items-center justify-center px-3 py-2 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100">
                         <i class="fas fa-edit mr-1"></i>
                         Editar
                     </a>
-                    <a href="/frota/{{ $motorcycle->id }}" class="flex-1 flex items-center justify-center px-3 py-2 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l border-gray-200">
+                    <a href="/frota/{{ $motorcycle->id }}" class="flex-1 flex items-center justify-center px-3 py-2 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100 border-l border-gray-200 dark:border-gray-700">
                         <i class="fas fa-eye"></i>
                     </a>
-                    <form method="POST" action="/frota/{{ $motorcycle->id }}" class="flex-1" onsubmit="return confirm('Tem certeza que deseja excluir esta motocicleta?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="w-full flex items-center justify-center px-3 py-2 text-xs text-red-600 hover:bg-red-50 hover:text-red-700 border-l border-gray-200">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </form>
+                    <button type="button" onclick="deleteMotorcycle({{ $motorcycle->id }}, '{{ $motorcycle->name }}')" class="flex-1 flex items-center justify-center px-3 py-2 text-xs text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 border-l border-gray-200 dark:border-gray-700">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </div>
             </div>
             @empty
             <div class="col-span-full text-center py-12">
-                <i class="fas fa-motorcycle text-4xl text-gray-400 mb-4"></i>
-                <p class="text-gray-500 text-lg">Nenhuma motocicleta encontrada</p>
+                <i class="fas fa-motorcycle text-4xl text-gray-400 dark:text-gray-500 mb-4"></i>
+                <p class="text-gray-500 dark:text-gray-400 text-lg">Nenhuma motocicleta encontrada</p>
                 <a href="/frota/create" class="inline-flex items-center px-3 py-1.5 mt-4 text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 rounded-md">
                     <i class="fas fa-plus mr-1.5 text-xs"></i>
                     Adicionar Primeira Moto
@@ -255,6 +251,12 @@
             </div>
             @endforelse
         </div>
+    </form>
+
+    <!-- Formulário oculto para exclusão individual -->
+    <form id="deleteForm" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
     </form>
 
     <!-- Pagination -->
@@ -274,6 +276,14 @@
 
     function clearFilters() {
         window.location.href = '/frota';
+    }
+
+    function deleteMotorcycle(id, name) {
+        if (confirm(`Tem certeza que deseja excluir a motocicleta "${name}"?`)) {
+            const form = document.getElementById('deleteForm');
+            form.action = `/frota/${id}`;
+            form.submit();
+        }
     }
 
     function bulkDelete() {

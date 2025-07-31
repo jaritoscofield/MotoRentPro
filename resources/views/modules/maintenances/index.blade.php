@@ -8,11 +8,11 @@
     <div class="mb-6">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Gestão de Manutenção</h1>
-                <p class="text-gray-600 mt-1">Gerencie todas as manutenções da frota</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Gestão de Manutenção</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-1">Gerencie todas as manutenções da frota</p>
             </div>
             <div class="flex flex-wrap gap-2 mt-4 lg:mt-0">
-                <a href="/manutencao/export" class="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-md text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                <a href="/manutencao/export" class="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-xs font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     <i class="fas fa-download mr-1.5 text-xs"></i>
                     Exportar
                 </a>
@@ -26,69 +26,69 @@
 
     <!-- Statistics Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div class="bg-white rounded-lg border border-gray-200 p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <i class="fas fa-tools text-blue-600 text-xl"></i>
                 </div>
                 <div class="ml-3">
-                    <p class="text-xs font-medium text-gray-500">Total</p>
-                    <p class="text-lg font-semibold text-gray-900">{{ $stats['total'] }}</p>
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Total</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $stats['total'] }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg border border-gray-200 p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <i class="fas fa-clock text-orange-600 text-xl"></i>
                 </div>
                 <div class="ml-3">
-                    <p class="text-xs font-medium text-gray-500">Pendentes</p>
-                    <p class="text-lg font-semibold text-gray-900">{{ $stats['pending'] }}</p>
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Pendentes</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $stats['pending'] }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg border border-gray-200 p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
                 </div>
                 <div class="ml-3">
-                    <p class="text-xs font-medium text-gray-500">Atrasadas</p>
-                    <p class="text-lg font-semibold text-gray-900">{{ $stats['overdue'] }}</p>
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Atrasadas</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $stats['overdue'] }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg border border-gray-200 p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
                 </div>
                 <div class="ml-3">
-                    <p class="text-xs font-medium text-gray-500">Custo Total</p>
-                    <p class="text-lg font-semibold text-gray-900">R$ {{ number_format($stats['total_cost'], 2, ',', '.') }}</p>
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Custo Total</p>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">R$ {{ number_format($stats['total_cost'], 2, ',', '.') }}</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Search and Filter Bar -->
-    <div class="bg-white rounded-lg border border-gray-200 p-4 mb-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 mb-6">
         <form method="GET" action="/manutencao" id="filterForm">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <!-- Search Bar -->
                 <div class="flex-1">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-search text-gray-400"></i>
+                            <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
                         </div>
                         <input type="text" 
                                name="search"
                                value="{{ request('search') }}"
-                               class="block w-full pl-10 pr-3 py-1.5 border border-gray-300 rounded-md text-xs placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500" 
+                               class="block w-full pl-10 pr-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-xs placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" 
                                placeholder="Buscar por descrição, técnico ou motocicleta...">
                     </div>
                 </div>
@@ -96,20 +96,20 @@
                 <!-- Filters and Controls -->
                 <div class="flex items-center gap-3">
                     <!-- Filter Button -->
-                    <button type="button" onclick="toggleFilters()" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 rounded-md text-xs font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    <button type="button" onclick="toggleFilters()" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-xs font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
                         <i class="fas fa-filter mr-1.5 text-xs"></i>
                         Filtros
                     </button>
                     
                     <!-- View Options -->
-                    <div class="flex items-center bg-gray-100 rounded-md p-0.5">
-                        <button type="button" class="p-1.5 text-gray-500 hover:text-gray-700 rounded">
+                    <div class="flex items-center bg-gray-100 dark:bg-gray-700 rounded-md p-0.5">
+                        <button type="button" class="p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 rounded">
                             <i class="fas fa-cog text-xs"></i>
                         </button>
-                        <button type="button" class="p-1.5 text-gray-900 bg-white rounded shadow-sm">
+                        <button type="button" class="p-1.5 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-600 rounded shadow-sm">
                             <i class="fas fa-th text-xs"></i>
                         </button>
-                        <button type="button" class="p-1.5 text-gray-500 hover:text-gray-700 rounded">
+                        <button type="button" class="p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 rounded">
                             <i class="fas fa-list text-xs"></i>
                         </button>
                         <button type="button" onclick="bulkDelete()" class="p-1.5 text-red-500 hover:text-red-700 rounded">
@@ -118,7 +118,7 @@
                     </div>
                     
                     <!-- Sort Dropdown -->
-                    <select name="sort" onchange="this.form.submit()" class="block px-3 py-1.5 border border-gray-300 rounded-md text-xs bg-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+                    <select name="sort" onchange="this.form.submit()" class="block px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                         <option value="scheduled_date" {{ request('sort') == 'scheduled_date' ? 'selected' : '' }}>Data Agendada ↑</option>
                         <option value="scheduled_date" {{ request('sort') == 'scheduled_date' && request('direction') == 'desc' ? 'selected' : '' }}>Data Agendada ↓</option>
                         <option value="priority" {{ request('sort') == 'priority' ? 'selected' : '' }}>Prioridade</option>
@@ -128,12 +128,12 @@
             </div>
 
             <!-- Advanced Filters (Hidden by default) -->
-            <div id="advancedFilters" class="hidden mt-4 pt-4 border-t border-gray-200">
+            <div id="advancedFilters" class="hidden mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <div class="flex flex-wrap items-end gap-4">
                     <!-- Status Filter -->
                     <div class="w-40">
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Status</label>
-                        <select name="status" class="block w-full px-2 py-1 border border-gray-300 rounded text-xs bg-white focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
+                        <select name="status" class="block w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded text-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                             <option value="">Todos</option>
                             <option value="Agendada" {{ request('status') == 'Agendada' ? 'selected' : '' }}>Agendada</option>
                             <option value="Em Andamento" {{ request('status') == 'Em Andamento' ? 'selected' : '' }}>Em Andamento</option>
@@ -144,8 +144,8 @@
 
                     <!-- Type Filter -->
                     <div class="w-40">
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Tipo</label>
-                        <select name="type" class="block w-full px-2 py-1 border border-gray-300 rounded text-xs bg-white focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Tipo</label>
+                        <select name="type" class="block w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded text-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                             <option value="">Todos</option>
                             <option value="Preventiva" {{ request('type') == 'Preventiva' ? 'selected' : '' }}>Preventiva</option>
                             <option value="Corretiva" {{ request('type') == 'Corretiva' ? 'selected' : '' }}>Corretiva</option>
@@ -157,8 +157,8 @@
 
                     <!-- Priority Filter -->
                     <div class="w-40">
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Prioridade</label>
-                        <select name="priority" class="block w-full px-2 py-1 border border-gray-300 rounded text-xs bg-white focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Prioridade</label>
+                        <select name="priority" class="block w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded text-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                             <option value="">Todas</option>
                             <option value="Baixa" {{ request('priority') == 'Baixa' ? 'selected' : '' }}>Baixa</option>
                             <option value="Média" {{ request('priority') == 'Média' ? 'selected' : '' }}>Média</option>
@@ -169,21 +169,21 @@
 
                     <!-- Date Range -->
                     <div class="w-40">
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Data de</label>
+                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Data de</label>
                         <input type="date" name="date_from" value="{{ request('date_from') }}" 
-                               class="block w-full px-2 py-1 border border-gray-300 rounded text-xs bg-white focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                               class="block w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded text-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                     </div>
 
                     <div class="w-40">
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Data até</label>
+                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Data até</label>
                         <input type="date" name="date_to" value="{{ request('date_to') }}" 
-                               class="block w-full px-2 py-1 border border-gray-300 rounded text-xs bg-white focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                               class="block w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded text-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                     </div>
                 </div>
 
                 <!-- Filter Actions -->
                 <div class="flex justify-end gap-2 mt-4">
-                    <button type="button" onclick="clearFilters()" class="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md">
+                    <button type="button" onclick="clearFilters()" class="px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md">
                         Limpar Filtros
                     </button>
                     <button type="submit" class="px-3 py-1.5 text-xs font-medium text-white bg-gray-800 hover:bg-gray-700 rounded-md">
@@ -195,12 +195,12 @@
     </div>
 
     <!-- Bulk Actions -->
-    <div class="bg-white rounded-lg border border-gray-200 mb-6">
-        <div class="px-4 py-3 border-b border-gray-200">
+    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 mb-6">
+        <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <input type="checkbox" id="selectAll" onchange="toggleAllCheckboxes()" class="rounded border-gray-300 text-gray-600 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50">
-                    <label for="selectAll" class="text-sm font-medium text-gray-700">Selecionar Todos</label>
+                    <input type="checkbox" id="selectAll" onchange="toggleAllCheckboxes()" class="rounded border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50">
+                    <label for="selectAll" class="text-sm font-medium text-gray-700 dark:text-gray-300">Selecionar Todos</label>
                 </div>
                 <button onclick="bulkDelete()" id="bulkDeleteBtn" class="hidden inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                     <i class="fas fa-trash mr-1.5 text-xs"></i>
@@ -211,48 +211,48 @@
 
         <!-- Table -->
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-900">
                     <tr>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            <input type="checkbox" class="rounded border-gray-300 text-gray-600 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50">
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            <input type="checkbox" class="rounded border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50">
                         </th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Motocicleta</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descrição</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data Agendada</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prioridade</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Custo</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Técnico</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Motocicleta</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Tipo</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Descrição</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Data Agendada</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Prioridade</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Custo</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Técnico</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Ações</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                     @forelse($maintenances as $maintenance)
-                    <tr class="hover:bg-gray-50">
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                         <td class="px-4 py-4 whitespace-nowrap">
-                            <input type="checkbox" name="selected[]" value="{{ $maintenance->id }}" class="maintenance-checkbox rounded border-gray-300 text-gray-600 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50">
+                            <input type="checkbox" name="selected[]" value="{{ $maintenance->id }}" class="maintenance-checkbox rounded border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50">
                         </td>
                         <td class="px-4 py-4 whitespace-nowrap">
                             <div>
-                                <div class="text-sm font-medium text-gray-900">{{ $maintenance->motorcycle->name }}</div>
-                                <div class="text-xs text-gray-500">{{ $maintenance->motorcycle->license_plate }}</div>
+                                <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $maintenance->motorcycle->name }}</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $maintenance->motorcycle->license_plate }}</div>
                             </div>
                         </td>
                         <td class="px-4 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <i class="{{ $maintenance->type_icon }} text-gray-400 mr-2 text-xs"></i>
-                                <span class="text-sm text-gray-900">{{ $maintenance->type }}</span>
+                                <span class="text-sm text-gray-900 dark:text-gray-100">{{ $maintenance->type }}</span>
                             </div>
                         </td>
                         <td class="px-4 py-4">
-                            <div class="text-sm text-gray-900 max-w-xs truncate" title="{{ $maintenance->description }}">
+                            <div class="text-sm text-gray-900 dark:text-gray-100 max-w-xs truncate" title="{{ $maintenance->description }}">
                                 {{ $maintenance->description }}
                             </div>
                         </td>
                         <td class="px-4 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">{{ $maintenance->formatted_scheduled_date }}</div>
+                            <div class="text-sm text-gray-900 dark:text-gray-100">{{ $maintenance->formatted_scheduled_date }}</div>
                             @if($maintenance->is_overdue)
                                 <div class="text-xs text-red-600">Atrasada</div>
                             @elseif($maintenance->is_upcoming)
@@ -269,18 +269,18 @@
                                 {{ $maintenance->priority }}
                             </span>
                         </td>
-                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                             {{ $maintenance->formatted_cost }}
                         </td>
-                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                             {{ $maintenance->technician ?? '-' }}
                         </td>
                         <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex items-center space-x-2">
-                                <a href="/manutencao/{{ $maintenance->id }}/edit" class="text-gray-600 hover:text-gray-900">
+                                <a href="/manutencao/{{ $maintenance->id }}/edit" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="/manutencao/{{ $maintenance->id }}" class="text-gray-600 hover:text-gray-900">
+                                <a href="/manutencao/{{ $maintenance->id }}" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <form method="POST" action="/manutencao/{{ $maintenance->id }}" class="inline" onsubmit="return confirm('Tem certeza que deseja excluir esta manutenção?')">
@@ -295,8 +295,8 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="10" class="px-4 py-8 text-center text-gray-500">
-                            <i class="fas fa-tools text-4xl mb-4 block"></i>
+                        <td colspan="10" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                            <i class="fas fa-tools text-4xl mb-4 block text-gray-400 dark:text-gray-500"></i>
                             <p class="text-lg font-medium">Nenhuma manutenção encontrada</p>
                             <p class="text-sm">Crie sua primeira manutenção para começar.</p>
                         </td>
@@ -308,7 +308,7 @@
 
         <!-- Pagination -->
         @if($maintenances->hasPages())
-        <div class="px-4 py-3 border-t border-gray-200">
+        <div class="px-4 py-3 border-t border-gray-200 dark:border-gray-700">
             {{ $maintenances->appends(request()->query())->links() }}
         </div>
         @endif

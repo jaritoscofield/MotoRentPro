@@ -6,56 +6,56 @@
 @section('content')
 <div class="p-6">
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p class="text-gray-600 mt-1">Visão geral do sistema de locação</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">Visão geral do sistema de locação</p>
     </div>
 
     <!-- Statistics Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white rounded-lg border border-gray-200 p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <i class="fas fa-motorcycle text-blue-600 text-2xl"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Motos Disponíveis</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $stats['available_motorcycles'] }}</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Motos Disponíveis</p>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $stats['available_motorcycles'] }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg border border-gray-200 p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <i class="fas fa-key text-green-600 text-2xl"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Motos Alugadas</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $stats['rented_motorcycles'] }}</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Motos Alugadas</p>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $stats['rented_motorcycles'] }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg border border-gray-200 p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <i class="fas fa-users text-purple-600 text-2xl"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Clientes Ativos</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $stats['active_clients'] }}</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Clientes Ativos</p>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $stats['active_clients'] }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg border border-gray-200 p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <i class="fas fa-dollar-sign text-green-600 text-2xl"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Receita Mensal</p>
-                    <p class="text-2xl font-bold text-gray-900">R$ {{ number_format($stats['monthly_revenue'], 0, ',', '.') }}</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Receita Mensal</p>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">R$ {{ number_format($stats['monthly_revenue'], 0, ',', '.') }}</p>
                 </div>
             </div>
         </div>
@@ -63,11 +63,11 @@
 
     <!-- Additional Stats -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div class="bg-white rounded-lg border border-gray-200 p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-gray-500">Motos em Manutenção</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $stats['maintenance_motorcycles'] }}</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Motos em Manutenção</p>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $stats['maintenance_motorcycles'] }}</p>
                 </div>
                 <div class="text-right">
                     <p class="text-sm font-medium text-green-600">Crescimento</p>
@@ -80,16 +80,16 @@
     <!-- Charts Section -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <!-- Revenue Chart -->
-        <div class="bg-white rounded-lg border border-gray-200 p-4">
-            <h3 class="text-md font-medium text-gray-900 mb-3">Receita Mensal</h3>
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+            <h3 class="text-md font-medium text-gray-900 dark:text-gray-100 mb-3">Receita Mensal</h3>
             <div class="h-48">
                 <canvas id="revenueChart"></canvas>
             </div>
         </div>
 
         <!-- Motorcycle Status Chart -->
-        <div class="bg-white rounded-lg border border-gray-200 p-4">
-            <h3 class="text-md font-medium text-gray-900 mb-3">Status das Motocicletas</h3>
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+            <h3 class="text-md font-medium text-gray-900 dark:text-gray-100 mb-3">Status das Motocicletas</h3>
             <div class="h-48">
                 <canvas id="motorcycleChart"></canvas>
             </div>
@@ -99,16 +99,16 @@
     <!-- More Charts -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <!-- Reservation Status Chart -->
-        <div class="bg-white rounded-lg border border-gray-200 p-4">
-            <h3 class="text-md font-medium text-gray-900 mb-3">Status das Reservas</h3>
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+            <h3 class="text-md font-medium text-gray-900 dark:text-gray-100 mb-3">Status das Reservas</h3>
             <div class="h-48">
                 <canvas id="reservationChart"></canvas>
             </div>
         </div>
 
         <!-- Maintenance Activity Chart -->
-        <div class="bg-white rounded-lg border border-gray-200 p-4">
-            <h3 class="text-md font-medium text-gray-900 mb-3">Atividade de Manutenção (30 dias)</h3>
+        <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+            <h3 class="text-md font-medium text-gray-900 dark:text-gray-100 mb-3">Atividade de Manutenção (30 dias)</h3>
             <div class="h-48">
                 <canvas id="maintenanceChart"></canvas>
             </div>
@@ -116,26 +116,26 @@
     </div>
 
     <!-- Recent Reservations -->
-    <div class="bg-white rounded-lg border border-gray-200">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-medium text-gray-900">Reservas Recentes</h3>
+    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Reservas Recentes</h3>
         </div>
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-900">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Moto</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Período</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Cliente</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Moto</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Período</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                     @forelse($recent_reservations as $reservation)
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $reservation->client->name ?? 'N/A' }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reservation->motorcycle->name ?? 'N/A' }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">{{ $reservation->client->name ?? 'N/A' }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $reservation->motorcycle->name ?? 'N/A' }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                             {{ $reservation->start_date ? \Carbon\Carbon::parse($reservation->start_date)->format('d/m') : 'N/A' }} - 
                             {{ $reservation->end_date ? \Carbon\Carbon::parse($reservation->end_date)->format('d/m') : 'N/A' }}
                         </td>
@@ -155,7 +155,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                        <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                             Nenhuma reserva encontrada
                         </td>
                     </tr>

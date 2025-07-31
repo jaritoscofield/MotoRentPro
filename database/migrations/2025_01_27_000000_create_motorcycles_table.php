@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('license_plate')->unique();
             $table->integer('year');
-            $table->enum('status', ['Disponível', 'Alugada', 'Manutenção', 'Inativa'])->default('Disponível');
+            $table->enum('status', ['Disponível', 'Alugada', 'Manutenção', 'Inativa', 'Vendida'])->default('Disponível');
             $table->decimal('rating', 2, 1)->default(0.0);
             $table->json('tags')->nullable();
             $table->enum('category', ['Urbana', 'Esportiva', 'Custom', 'Trail'])->default('Urbana');
